@@ -1,0 +1,21 @@
+{
+    "name": "nahoy31/queue-bundle",
+    "description": "...",
+    "keywords": ["api-platform", "symfony3", "symfony4", "api"],
+    "homepage": "https://github.com/nahoy31/queue-bundle",
+    "type": "symfony-bundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Yohann Frelicot",
+            "email": "yfrelicot@gmail.com"
+        }
+    ],
+    "require": {
+    },
+    "autoload": {
+        "psr-4": {
+            "Nahoy\\ApiPlatform\\QueueBundle\\": "src/"
+        }
+    }
+}
