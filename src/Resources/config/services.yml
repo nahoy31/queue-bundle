@@ -1,1 +1,7 @@
 services:
+    Nahoy\ApiPlatform\QueueBundle\EventListener\JobListener:
+        arguments:
+            - "%nahoy_api_platform_queue.class.job%"
+            - "@security.token_storage"
+        tags:
+            - { name: doctrine.event_listener, event: prePersist }

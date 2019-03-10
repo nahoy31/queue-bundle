@@ -82,18 +82,21 @@ class BaseJob
 
     /**
      * @ORM\Column(type = "string", length = 15)
+     * @ApiFilter(SearchFilter::class, strategy="exact")
      * @Groups("job")
      */
-    protected $status;
+    protected $status = self::STATE_NEW;
 
     /**
-     * @ORM\Column(type = "string", length = Job::MAX_QUEUE_LENGTH)
+     * @ORM\Column(type = "string", length = BaseJob::MAX_QUEUE_LENGTH, nullable = true)
+     * @ApiFilter(SearchFilter::class, strategy="exact")
      * @Groups("job")
      */
     protected $queue;
 
     /**
      * @ORM\Column(type = "smallint")
+     * @ApiFilter(SearchFilter::class, strategy="exact")
      * @Groups("job")
      */
     protected $priority = 0;
@@ -123,19 +126,21 @@ class BaseJob
     protected $closedAt;
 
     /**
-     * @ORM\Column(type = "string", name="workerName", length = 50, nullable = true)
+     * @ORM\Column(type = "string", name="workerName", length = 50)
+     * @ApiFilter(SearchFilter::class, strategy="exact")
      * @Groups("job")
      */
-    protected $workerName;
+    protected $workerName = '';
 
     /**
      * @ORM\Column(type = "string")
+     * @ApiFilter(SearchFilter::class, strategy="exact")
      * @Groups("job")
      */
     protected $command;
 
     /**
-     * @ORM\Column(type = "json_array")
+     * @ORM\Column(type = "json_array", nullable = true)
      * @Groups("job")
      */
     protected $args;
@@ -267,6 +272,20 @@ class BaseJob
     }
 
     /**
+     * set createdAt
+     *
+     * @param \DateTime $createdAt
+     *
+     * @return Job
+     */
+    public function setCreatedAt(\DateTime $createdAt)
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
      * get createdAt
      *
      * @return \DateTime
@@ -274,6 +293,20 @@ class BaseJob
     public function getCreatedAt()
     {
         return $this->createdAt;
+    }
+
+    /**
+     * set startedAt
+     *
+     * @param \DateTime $startedAt
+     *
+     * @return Job
+     */
+    public function setStartedAt(\DateTime $startedAt)
+    {
+        $this->startedAt = $startedAt;
+
+        return $this;
     }
 
     /**
@@ -287,6 +320,20 @@ class BaseJob
     }
 
     /**
+     * set checkedAt
+     *
+     * @param \DateTime $checkedAt
+     *
+     * @return Job
+     */
+    public function setCheckedAt(\DateTime $checkedAt)
+    {
+        $this->checkedAt = $checkedAt;
+
+        return $this;
+    }
+
+    /**
      * get checkedAt
      *
      * @return \DateTime
@@ -294,6 +341,20 @@ class BaseJob
     public function getCheckedAt()
     {
         return $this->checkedAt;
+    }
+
+    /**
+     * set closedAt
+     *
+     * @param \DateTime $closedAt
+     *
+     * @return Job
+     */
+    public function setClosedAt(\DateTime $closedAt)
+    {
+        $this->closedAt = $closedAt;
+
+        return $this;
     }
 
     /**
