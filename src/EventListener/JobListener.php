@@ -48,5 +48,16 @@ class JobListener
         }
 
         $entity->setCreatedAt(new \DateTime());
+
+        $user = null;
+
+        if ($this->tokenStorage->getToken()) {
+            /** @var User $user */
+            $user = $this->tokenStorage->getToken()->getUser();
+        }
+
+        if (!empty($user)) {
+            $entity->setCreatedBy($user->getId());
+        }
     }
 }

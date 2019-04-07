@@ -5,3 +5,11 @@ services:
             - "@security.token_storage"
         tags:
             - { name: doctrine.event_listener, event: prePersist }
+
+    Nahoy\ApiPlatform\QueueBundle\Filter\Configurator:
+        arguments:
+            - "@doctrine.orm.entity_manager"
+            - "@security.token_storage"
+            - "@annotation_reader"
+        tags:
+            - { name: kernel.event_listener, event: kernel.request }

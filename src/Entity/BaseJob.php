@@ -10,6 +10,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 
 /**
@@ -126,7 +127,7 @@ class BaseJob
     protected $closedAt;
 
     /**
-     * @ORM\Column(type = "string", name="workerName", length = 50)
+     * @ORM\Column(type = "string", name="workerName", length = 50, nullable = true)
      * @ApiFilter(SearchFilter::class, strategy="exact")
      * @Groups("job")
      */
@@ -141,6 +142,7 @@ class BaseJob
 
     /**
      * @ORM\Column(type = "json_array", nullable = true)
+     * @ApiFilter(SearchFilter::class, strategy="partial")
      * @Groups("job")
      */
     protected $args;
@@ -168,6 +170,13 @@ class BaseJob
      * @Groups("job")
      */
     protected $memoryUsageReal;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     * @ApiFilter(SearchFilter::class, strategy="exact")
+     * @Groups("job")
+     */
+    private $createdBy;
 
     /**
      * get id
@@ -392,6 +401,20 @@ class BaseJob
     }
 
     /**
+     * set args
+     *
+     * @param mixed $args
+     *
+     * @return Job
+     */
+    public function setArgs($args)
+    {
+        $this->args = $args;
+
+        return $this;
+    }
+
+    /**
      * get args
      *
      * @return mixed
@@ -487,6 +510,30 @@ class BaseJob
     public function getExitCode()
     {
         return $this->exitCode;
+    }
+
+    /**
+     * Set createdBy
+     *
+     * @param integer $createdBy
+     *
+     * @return Job
+     */
+    public function setCreatedBy($createdBy)
+    {
+        $this->createdBy = $createdBy;
+
+        return $this;
+    }
+
+    /**
+     * Get createdBy
+     *
+     * @return integer
+     */
+    public function getCreatedBy()
+    {
+        return $this->createdBy;
     }
 
     /**
